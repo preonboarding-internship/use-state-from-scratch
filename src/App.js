@@ -1,4 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { makeMyHooks } from "./hooks";
+
+const { useState } = makeMyHooks();
 
 function App() {
   const [count, setCount] = useState(0);

@@ -25,7 +25,23 @@ export function makeMyHooks() {
     return [state, setState];
   }
 
-  function useEffect() {}
+  function useEffect(effect, deps) {
+    const prevDeps = hooks[hookIndex];
+
+    function isFirstCall() {
+      return prevDeps === undefined;
+    }
+
+    function depsHasChanged() {
+      return deps.some((dependancy, index) => dependancy !== prevDeps[index]);
+    }
+
+    if (isFirstCall() || depsHasChanged()) effect();
+
+    hooks[hookIndex] = deps;
+
+    hookIndex++;
+  }
 
   return { useState, useEffect };
 }

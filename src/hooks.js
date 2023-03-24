@@ -1,3 +1,5 @@
+import { render } from ".";
+
 export function makeMyHooks() {
   const hooks = [];
   let hookIndex = 0;
@@ -8,7 +10,15 @@ export function makeMyHooks() {
 
     hooks[hookIndex] = state;
 
-    const setState = function () {};
+    const setState = (function () {
+      const currentIndex = hookIndex;
+
+      return (newState) => {
+        hooks[currentIndex] = newState;
+        hookIndex = 0;
+        render();
+      };
+    })();
 
     hookIndex++;
 
